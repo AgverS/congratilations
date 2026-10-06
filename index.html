@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Для тебя, Бабушка 💐</title>
+    <meta name="description" content="Открытка с днём рождения для самой любимой Бабушки" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Для тебя, Бабушка 💐" />
+    <meta property="og:description" content="У нас для тебя сюрприз — открой открытку" />
+    <meta property="og:image" content="./og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#ffe9d6" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💐%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Nunito:wght@600;700;800&display=swap&subset=cyrillic"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="bg"></div>
+    <canvas id="scene"></canvas>
+
+    <div id="loader">
+      <div class="loader-heart">💗</div>
+      <p>Готовим сюрприз…</p>
+    </div>
+
+    <section id="start" class="screen" hidden>
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+        <div class="env-card">💐</div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="env-seal">❤</div>
+      </div>
+      <h1 id="startTitle"></h1>
+      <p id="startSub" class="sub"></p>
+      <button id="openBtn" class="btn"></button>
+    </section>
+
+    <div id="hud" hidden>
+      <button id="musicBtn" class="round" aria-label="Включить или выключить музыку">🔊</button>
+      <button id="prevBtn" class="round arrow left" aria-label="Назад" hidden>‹</button>
+      <button id="nextArrow" class="round arrow right" aria-label="Вперёд" hidden>›</button>
+      <div id="dock">
+        <p id="hint"></p>
+        <button id="mainBtn" class="btn" hidden></button>
+      </div>
+    </div>
+
+    <section id="letter" class="card-panel" hidden>
+      <h2 id="letterTitle"></h2>
+      <div id="letterLines"></div>
+      <p id="letterSign" class="sign"></p>
+    </section>
+
+    <section id="viewer" hidden>
+      <button id="viewerClose" class="btn"></button>
+      <figure>
+        <img id="viewerImg" alt="" />
+        <figcaption id="viewerCap"></figcaption>
+      </figure>
+      <button id="viewerPrev" class="round arrow left" aria-label="Назад">‹</button>
+      <button id="viewerNext" class="round arrow right" aria-label="Вперёд">›</button>
+    </section>
+
+    <section id="secret" class="modal" hidden>
+      <div class="card-panel">
+        <div class="big-emoji">💌</div>
+        <p id="secretText"></p>
+        <button id="secretClose" class="btn"></button>
+      </div>
+    </section>
+
+    <section id="final" hidden>
+      <h2 id="finalTitle"></h2>
+      <p id="finalText"></p>
+    </section>
+
+    <div id="fallback" hidden></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
