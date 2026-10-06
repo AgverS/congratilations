@@ -516,7 +516,6 @@ export class World {
     const step = (Math.PI * 2) / n
     this.cards.forEach((c, i) => {
       c.position.set(Math.sin(i * step) * this.ringR, 0, Math.cos(i * step) * this.ringR)
-      c.rotation.y = i * step * 0.4
     })
     this.applyRing()
   }
@@ -532,6 +531,8 @@ export class World {
       if (rel > n / 2) rel -= n
       const z = Math.cos(rel * step)
       c.visible = z > -0.3
+      // лицом к камере с небольшим веером: учитываем поворот самого кольца
+      c.rotation.y = rel * step * 0.4 + pos * step
       c.scale.setScalar(0.78 + 0.22 * Math.max(0, z))
     })
     const idx = ((Math.round(pos) % n) + n) % n
@@ -668,7 +669,7 @@ export class World {
       if (!d) return
       if (d.moved < 8) this.handleTap(e.clientX, e.clientY)
       else if (this.stage === 'photos') {
-        this.snapRing(Math.round(this.ringState.pos - d.v * 0.06))
+        this.snapRing(Math.round(this.ringState.pos - Math.max(-0.9, Math.min(0.9, d.v / 30))))
       }
     }
     canvas.addEventListener('pointerup', end)
