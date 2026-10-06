@@ -27,17 +27,17 @@
     <canvas id="scene"></canvas>
 
     <div id="loader">
-      <div class="loader-heart">💗</div>
+      <div class="loader-heart" id="loaderHeart"></div>
       <p>Готовим сюрприз…</p>
     </div>
 
     <section id="start" class="screen" hidden>
       <div class="envelope" id="envelope">
         <div class="env-back"></div>
-        <div class="env-card">💐</div>
+        <div class="env-card" id="envCard"></div>
         <div class="env-front"></div>
         <div class="env-flap"></div>
-        <div class="env-seal">❤</div>
+        <div class="env-seal" id="envSeal"></div>
       </div>
       <h1 id="startTitle"></h1>
       <p id="startSub" class="sub"></p>
@@ -45,9 +45,9 @@
     </section>
 
     <div id="hud" hidden>
-      <button id="musicBtn" class="round" aria-label="Включить или выключить музыку">🔊</button>
-      <button id="prevBtn" class="round arrow left" aria-label="Назад" hidden>‹</button>
-      <button id="nextArrow" class="round arrow right" aria-label="Вперёд" hidden>›</button>
+      <button id="musicBtn" class="round" aria-label="Включить или выключить музыку"></button>
+      <button id="prevBtn" class="round arrow left" aria-label="Назад" hidden></button>
+      <button id="nextArrow" class="round arrow right" aria-label="Вперёд" hidden></button>
       <div id="dock">
         <p id="hint"></p>
         <button id="mainBtn" class="btn" hidden></button>
@@ -66,13 +66,13 @@
         <img id="viewerImg" alt="" />
         <figcaption id="viewerCap"></figcaption>
       </figure>
-      <button id="viewerPrev" class="round arrow left" aria-label="Назад">‹</button>
-      <button id="viewerNext" class="round arrow right" aria-label="Вперёд">›</button>
+      <button id="viewerPrev" class="round arrow left" aria-label="Назад"></button>
+      <button id="viewerNext" class="round arrow right" aria-label="Вперёд"></button>
     </section>
 
     <section id="secret" class="modal" hidden>
       <div class="card-panel">
-        <div class="big-emoji">💌</div>
+        <div class="big-emoji" id="secretIcon"></div>
         <p id="secretText"></p>
         <button id="secretClose" class="btn"></button>
       </div>

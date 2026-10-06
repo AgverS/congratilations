@@ -184,8 +184,8 @@ body {
   background: #f6c9a3;
   border-radius: 10px;
 }
-.env-card {
-  inset: 8% 8% auto 8% !important;
+.envelope > .env-card {
+  inset: 8% 8% auto 8%;
   height: 80%;
   display: grid;
   place-content: center;
@@ -208,8 +208,8 @@ body {
   transition: transform 0.8s;
   border-radius: 10px 10px 0 0;
 }
-.env-seal {
-  inset: auto !important;
+.envelope > .env-seal {
+  inset: auto;
   left: 50%;
   top: 46%;
   width: 14%;
@@ -495,4 +495,52 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ---------- иконки ---------- */
+.round svg {
+  width: 62%;
+  height: 62%;
+  display: block;
+  margin: auto;
+}
+.round.arrow svg {
+  width: 50%;
+  height: 50%;
+}
+.loader-heart {
+  color: var(--rose);
+  width: 76px;
+  height: 76px;
+  margin: 0 auto;
+}
+.loader-heart svg,
+.big-emoji svg,
+.env-card svg,
+.env-seal svg,
+#fallback .big svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.big-emoji {
+  width: 72px;
+  height: 72px;
+  color: var(--rose);
+}
+.env-card svg {
+  width: 46%;
+  height: auto;
+  margin: auto;
+}
+.env-seal svg {
+  width: 60%;
+  height: 60%;
+  margin: auto;
+}
+#fallback .big {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+  color: var(--rose);
 }

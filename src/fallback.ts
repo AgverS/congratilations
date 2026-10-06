@@ -1,4 +1,5 @@
 import { content } from './content'
+import { icons } from './icons'
 import type { PhotoInfo } from './world'
 
 /** Простая 2D-версия: фото + текст + CSS-анимации. */
@@ -10,7 +11,7 @@ export function showFallback(photos: PhotoInfo[], startAudio: () => void) {
   const { letter, finale, photos: ph } = content
   root.innerHTML = `
     <div class="fb">
-      <div class="big">💐</div>
+      <div class="big">${icons.flower}</div>
       <h1>${letter.title}</h1>
       <div class="photos">
         ${photos
@@ -25,7 +26,7 @@ export function showFallback(photos: PhotoInfo[], startAudio: () => void) {
       ${letter.lines.map((l) => `<p>${l}</p>`).join('')}
       <h1>${letter.signature}</h1>
       <p>${finale.text}</p>
-      <div class="big">🌸 💗 🌸</div>
+      <div class="big">${icons.heart}</div>
     </div>`
   root.hidden = false
   document.addEventListener('pointerdown', startAudio, { once: true })

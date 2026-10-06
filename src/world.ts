@@ -372,10 +372,20 @@ export class World {
     const base = import.meta.env.BASE_URL
     const texes = await Promise.all(
       this.photos.map(async (p) => {
-        const t = await loader.loadAsync(base + p.src)
-        t.colorSpace = THREE.SRGBColorSpace
-        t.anisotropy = maxAniso
-        return t
+        try {
+          const t = await loader.loadAsync(base + p.src)
+          t.colorSpace = THREE.SRGBColorSpace
+          t.anisotropy = maxAniso
+          return t
+        } catch {
+          // фото не загрузилось — оставляем мягкую заглушку, а 3D-сцену не ломаем
+          const c = document.createElement('canvas')
+          c.width = c.height = 4
+          const g = c.getContext('2d')!
+          g.fillStyle = '#ffd3e2'
+          g.fillRect(0, 0, 4, 4)
+          return new THREE.CanvasTexture(c)
+        }
       }),
     )
     const frameMat = new THREE.MeshStandardMaterial({ color: 0xfffaf2, roughness: 0.6 })

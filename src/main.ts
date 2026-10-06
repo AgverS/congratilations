@@ -2,6 +2,7 @@ import './style.css'
 import gsap from 'gsap'
 import photosManifest from './photos.json'
 import { content } from './content'
+import { icons } from './icons'
 import { detectQuality, hasWebGL, isTooWeak } from './quality'
 import { showFallback } from './fallback'
 import { World, type Stage } from './world'
@@ -18,8 +19,16 @@ audio.preload = 'auto'
 let musicOn = true
 const musicBtn = $<HTMLButtonElement>('musicBtn')
 function syncMusicBtn() {
-  musicBtn.textContent = musicOn ? '🔊' : '🔇'
+  musicBtn.innerHTML = musicOn ? icons.soundOn : icons.soundOff
 }
+syncMusicBtn()
+
+$('loaderHeart').innerHTML = icons.heart
+$('envCard').innerHTML = icons.flower
+$('envSeal').innerHTML = icons.heart
+$('secretIcon').innerHTML = icons.mail
+for (const id of ['prevBtn', 'viewerPrev']) $(id).innerHTML = icons.chevronL
+for (const id of ['nextArrow', 'viewerNext']) $(id).innerHTML = icons.chevronR
 function startAudio() {
   musicOn = true
   audio.play().catch(() => {
