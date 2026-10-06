@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
-export const PALETTE = [0xff8fb1, 0xffb38a, 0xc7a2ff, 0xffe27a, 0xffffff, 0xff7a9c]
+// оттенки кобальта: множитель на градиент лепестков (светлый кончик, тёмная середина)
+export const PALETTE = [0xffffff, 0xc9d8ff, 0x9fb5f5, 0xe6ecff, 0xb5c7fa, 0x86a4f5]
 
 function petalRing(
   count: number,
@@ -27,15 +28,29 @@ function petalRing(
 const headGeo = mergeGeometries([
   ...petalRing(8, 0.62, 0.27, 0.35, 0, 0),
   ...petalRing(8, 0.5, 0.24, 0.75, Math.PI / 8, -0.05),
-])
+])!
+{
+  // мазок гжели: тёмный кобальт у середины, светлый к кончику лепестка
+  const pos = headGeo.attributes.position
+  const col = new Float32Array(pos.count * 3)
+  const deep = new THREE.Color(0x1c3cae)
+  const light = new THREE.Color(0xf1f5ff)
+  const c = new THREE.Color()
+  for (let i = 0; i < pos.count; i++) {
+    const t = Math.min(1, Math.hypot(pos.getX(i), pos.getY(i)) / 1.15)
+    c.copy(deep).lerp(light, Math.pow(t, 0.8))
+    col.set([c.r, c.g, c.b], i * 3)
+  }
+  headGeo.setAttribute('color', new THREE.BufferAttribute(col, 3))
+}
 const centerGeo = new THREE.SphereGeometry(0.2, 12, 8)
 centerGeo.scale(1, 1, 0.6)
 centerGeo.translate(0, 0, 0.04)
-const centerMat = new THREE.MeshStandardMaterial({ color: 0xf2b134, roughness: 0.6 })
-const stemMat = new THREE.MeshStandardMaterial({ color: 0x6fae6a, roughness: 0.8 })
+const centerMat = new THREE.MeshStandardMaterial({ color: 0x14287a, roughness: 0.5 })
+const stemMat = new THREE.MeshStandardMaterial({ color: 0x2748b8, roughness: 0.6 })
 const leafMat = new THREE.MeshStandardMaterial({
-  color: 0x8cc57d,
-  roughness: 0.8,
+  color: 0x5a7fe0,
+  roughness: 0.6,
   side: THREE.DoubleSide,
 })
 
@@ -56,10 +71,9 @@ function petalMat(color: number) {
   if (!m) {
     m = new THREE.MeshStandardMaterial({
       color,
-      roughness: 0.7,
+      vertexColors: true,
+      roughness: 0.5,
       side: THREE.DoubleSide,
-      emissive: color,
-      emissiveIntensity: 0.14,
     })
     petalMats.set(color, m)
   }
@@ -111,7 +125,7 @@ export function createGrass(count: number, width: number): THREE.InstancedMesh {
       new THREE.Vector3(1, 0.3 + Math.random() * 0.7, 1),
     )
     mesh.setMatrixAt(i, m)
-    mesh.setColorAt(i, color.setHSL(0.27 + Math.random() * 0.06, 0.5, 0.3 + Math.random() * 0.1))
+    mesh.setColorAt(i, color.setHSL(0.62 + Math.random() * 0.03, 0.7, 0.32 + Math.random() * 0.22))
   }
   return mesh
 }

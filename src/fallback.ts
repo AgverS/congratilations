@@ -1,5 +1,5 @@
 import { content } from './content'
-import { icons } from './icons'
+import { art, defs } from './art'
 import type { PhotoInfo } from './world'
 
 /** Простая 2D-версия: фото + текст + CSS-анимации. */
@@ -9,9 +9,9 @@ export function showFallback(photos: PhotoInfo[], startAudio: () => void) {
   const root = document.getElementById('fallback')!
   const base = import.meta.env.BASE_URL
   const { letter, finale, photos: ph } = content
-  root.innerHTML = `
+  root.innerHTML = `${defs}
     <div class="fb">
-      <div class="big">${icons.flower}</div>
+      <div class="big">${art.rosette()}</div>
       <h1>${letter.title}</h1>
       <div class="photos">
         ${photos
@@ -26,7 +26,7 @@ export function showFallback(photos: PhotoInfo[], startAudio: () => void) {
       ${letter.lines.map((l) => `<p>${l}</p>`).join('')}
       <h1>${letter.signature}</h1>
       <p>${finale.text}</p>
-      <div class="big">${icons.heart}</div>
+      <div class="big">${art.rosette()}</div>
     </div>`
   root.hidden = false
   document.addEventListener('pointerdown', startAudio, { once: true })

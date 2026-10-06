@@ -25,3 +25,8 @@ dist-ssr
 
 # исходные фото (оригиналы), в репозиторий идут только сжатые из public/photos
 /photos/
+
+# навыки ИИ-агента
+.agents/
+.claude/
+.impeccable/

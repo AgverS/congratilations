@@ -18,8 +18,8 @@ export interface WorldEvents {
 }
 
 const FOV = 50
-const WORD_COLORS = [0xe8508a, 0xf08a5d, 0xb36bd6, 0xe9a21c, 0xf26d8f]
-const SPARK_COLORS = [0xffd36b, 0xff8fb1, 0xffffff, 0xc7a2ff, 0xffb38a]
+const WORD_COLORS = [0x1d3fae, 0x2f55c9, 0x16318f, 0x3f66d8, 0x24419f]
+const SPARK_COLORS = [0x2f55c9, 0x6f93ee, 0xffffff, 0xa9bdf0, 0x1c3cae]
 const dur = (s: number) => (reducedMotion ? s * 0.4 : s)
 
 function glowTexture(): THREE.CanvasTexture {
@@ -27,9 +27,9 @@ function glowTexture(): THREE.CanvasTexture {
   c.width = c.height = 128
   const g = c.getContext('2d')!
   const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64)
-  grad.addColorStop(0, 'rgba(255,240,190,1)')
-  grad.addColorStop(0.35, 'rgba(255,214,120,0.55)')
-  grad.addColorStop(1, 'rgba(255,214,120,0)')
+  grad.addColorStop(0, 'rgba(120,160,255,0.85)')
+  grad.addColorStop(0.4, 'rgba(90,130,240,0.3)')
+  grad.addColorStop(1, 'rgba(90,130,240,0)')
   g.fillStyle = grad
   g.fillRect(0, 0, 128, 128)
   return new THREE.CanvasTexture(c)
@@ -65,6 +65,89 @@ function sampleWord(text: string, count: number): Float32Array {
     out[i * 2 + 1] = pts[j * 2 + 1] + (Math.random() - 0.5) * 0.04
   }
   return out
+}
+
+/** Маленькая гжельская розетка для нижней полоски рамки. */
+function ornamentTexture(): THREE.CanvasTexture {
+  const c = document.createElement('canvas')
+  c.width = 256
+  c.height = 128
+  const g = c.getContext('2d')!
+  const petal = (x: number, y: number, len: number, w: number, rot: number) => {
+    g.save()
+    g.translate(x, y)
+    g.rotate(rot)
+    const grd = g.createRadialGradient(0, -len * 0.2, 0, 0, -len * 0.2, len)
+    grd.addColorStop(0, '#eaf0ff')
+    grd.addColorStop(0.55, '#7f9fee')
+    grd.addColorStop(1, '#1c3cae')
+    g.fillStyle = grd
+    g.strokeStyle = '#1c3cae'
+    g.lineWidth = 2
+    g.beginPath()
+    g.moveTo(0, -len * 0.09)
+    g.bezierCurveTo(-w, -len * 0.34, -w * 0.85, -len * 0.75, 0, -len)
+    g.bezierCurveTo(w * 0.85, -len * 0.75, w, -len * 0.34, 0, -len * 0.09)
+    g.fill()
+    g.stroke()
+    g.restore()
+  }
+  for (let i = 0; i < 8; i++) petal(128, 64, 56, 14, (Math.PI * 2 * i) / 8)
+  for (let i = 0; i < 8; i++) petal(128, 64, 34, 9, (Math.PI * 2 * (i + 0.5)) / 8)
+  g.fillStyle = '#1c3cae'
+  g.beginPath()
+  g.arc(128, 64, 11, 0, Math.PI * 2)
+  g.fill()
+  for (const sx of [-1, 1]) {
+    petal(128 + sx * 78, 70, 36, 9, sx * 1.2)
+    petal(128 + sx * 104, 78, 26, 7, sx * 1.5)
+    g.fillStyle = '#3f66d8'
+    g.beginPath()
+    g.arc(128 + sx * 52, 64, 3, 0, Math.PI * 2)
+    g.fill()
+  }
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
+function rosetteTexture(): THREE.CanvasTexture {
+  const c = document.createElement('canvas')
+  c.width = c.height = 512
+  const g = c.getContext('2d')!
+  const petal = (len: number, w: number, rot: number) => {
+    g.save()
+    g.translate(256, 256)
+    g.rotate(rot)
+    const grd = g.createRadialGradient(0, -len * 0.2, 0, 0, -len * 0.2, len)
+    grd.addColorStop(0, '#eaf0ff')
+    grd.addColorStop(0.55, '#7f9fee')
+    grd.addColorStop(1, '#1c3cae')
+    g.fillStyle = grd
+    g.strokeStyle = '#1c3cae'
+    g.lineWidth = 3
+    g.beginPath()
+    g.moveTo(0, -len * 0.09)
+    g.bezierCurveTo(-w, -len * 0.34, -w * 0.85, -len * 0.75, 0, -len)
+    g.bezierCurveTo(w * 0.85, -len * 0.75, w, -len * 0.34, 0, -len * 0.09)
+    g.fill()
+    g.stroke()
+    g.restore()
+  }
+  for (let i = 0; i < 6; i++) petal(230, 56, (Math.PI * 2 * (i + 0.5)) / 6 + 0.26)
+  for (let i = 0; i < 8; i++) petal(190, 46, (Math.PI * 2 * i) / 8)
+  for (let i = 0; i < 8; i++) petal(120, 30, (Math.PI * 2 * (i + 0.5)) / 8)
+  g.fillStyle = '#1c3cae'
+  g.beginPath()
+  g.arc(256, 256, 34, 0, Math.PI * 2)
+  g.fill()
+  g.fillStyle = '#eaf0ff'
+  g.beginPath()
+  g.arc(256, 256, 11, 0, Math.PI * 2)
+  g.fill()
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
 }
 
 function heartShape(): THREE.Shape {
@@ -152,8 +235,8 @@ export class World {
     this.renderer.setPixelRatio(q.dpr)
     this.renderer.setClearColor(0x000000, 0)
 
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xffd9c0, 1.9))
-    const sun = new THREE.DirectionalLight(0xfff0d8, 2.2)
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xc9d8ff, 1.9))
+    const sun = new THREE.DirectionalLight(0xffffff, 2.2)
     sun.position.set(3, 5, 7)
     this.scene.add(sun)
 
@@ -209,14 +292,14 @@ export class World {
     this.seedGlow = new THREE.Sprite(
       new THREE.SpriteMaterial({ map: this.glow, transparent: true, depthWrite: false }),
     )
-    this.seedGlow.scale.setScalar(3.2)
+    this.seedGlow.scale.setScalar(3.4)
     const core = new THREE.Mesh(
       new THREE.SphereGeometry(0.28, 20, 14),
       new THREE.MeshStandardMaterial({
-        color: 0xffd36b,
-        emissive: 0xffb830,
-        emissiveIntensity: 0.9,
-        roughness: 0.4,
+        color: 0x2f55c9,
+        emissive: 0x1c3cae,
+        emissiveIntensity: 0.5,
+        roughness: 0.3,
       }),
     )
     core.scale.set(0.8, 1.15, 0.8)
@@ -234,7 +317,7 @@ export class World {
       const f = createFlower(
         PALETTE[i % PALETTE.length],
         new THREE.Vector3((Math.random() - 0.5) * 0.7, h, 0),
-        0.9 + Math.random() * 0.5,
+        1.35 + Math.random() * 0.6,
       )
       f.position.set(x, 0, -1.6 + Math.random() * 2.4)
       f.scale.setScalar(0.001)
@@ -293,7 +376,7 @@ export class World {
   private buildFireflies() {
     const n = this.q.fireflies
     this.fireflies = new SoftPoints(n)
-    const c = new THREE.Color(0xffc94d)
+    const c = new THREE.Color(0x3f66d8)
     for (let i = 0; i < n; i++) {
       this.fireflies.pos.set(
         [(Math.random() - 0.5) * 14, (Math.random() - 0.5) * 9, (Math.random() - 0.5) * 5],
@@ -338,7 +421,7 @@ export class World {
     const low = new THREE.Shape()
     low.absellipse(0.15, -0.1, 0.14, 0.11, 0, Math.PI * 2, false, -0.3)
     const wing2 = new THREE.ShapeGeometry(low)
-    const colors = [0xff8fb1, 0xffb347, 0xc7a2ff, 0x7fd1e8, 0xffe27a, 0xff7a9c]
+    const colors = [0x2f55c9, 0x6f93ee, 0x1c3cae, 0x8fabf0, 0x3f66d8, 0x5a7fe0]
     for (let i = 0; i < this.q.butterflies; i++) {
       const mat = new THREE.MeshBasicMaterial({
         color: colors[i % colors.length],
@@ -388,7 +471,9 @@ export class World {
         }
       }),
     )
-    const frameMat = new THREE.MeshStandardMaterial({ color: 0xfffaf2, roughness: 0.6 })
+    const frameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.35 })
+    const edgeMat = new THREE.MeshStandardMaterial({ color: 0x1f43b8, roughness: 0.4 })
+    const ornTex = ornamentTexture()
     let maxW = 0
     let maxH = 0
     let sumW = 0
@@ -409,7 +494,14 @@ export class World {
         new THREE.MeshBasicMaterial({ map: texes[i] }),
       )
       pic.position.set(0, (fh - ph) / 2 - 0.12, 0.03)
-      card.add(frame, pic)
+      const edge = new THREE.Mesh(new THREE.BoxGeometry(fw + 0.12, fh + 0.12, 0.04), edgeMat)
+      edge.position.z = -0.012
+      const orn = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.9, 0.45),
+        new THREE.MeshBasicMaterial({ map: ornTex, transparent: true }),
+      )
+      orn.position.set(0, -fh / 2 + 0.3, 0.03)
+      card.add(frame, pic, edge, orn)
       this.cards.push(card)
       this.ring.add(card)
     })
@@ -462,13 +554,19 @@ export class World {
     const mesh = new THREE.Mesh(
       geo,
       new THREE.MeshStandardMaterial({
-        color: 0xff5d8f,
-        emissive: 0xff2f6d,
-        emissiveIntensity: 0.35,
-        roughness: 0.3,
+        color: 0xf2f6ff,
+        roughness: 0.18,
+        metalness: 0.05,
       }),
     )
     mesh.userData.isHeart = true
+    const decal = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.9, 1.9),
+      new THREE.MeshBasicMaterial({ map: rosetteTexture(), transparent: true }),
+    )
+    decal.position.set(0, 0.1, 0.43)
+    decal.userData.isHeart = true
+    mesh.add(decal)
     const halo = new THREE.Sprite(
       new THREE.SpriteMaterial({
         map: this.glow,
@@ -503,7 +601,7 @@ export class World {
     }
     const paper = new THREE.Mesh(
       new THREE.CylinderGeometry(1.3, 0.28, 2.4, 28, 1, true),
-      new THREE.MeshStandardMaterial({ color: 0xf6e3c4, roughness: 0.9, side: THREE.DoubleSide }),
+      new THREE.MeshStandardMaterial({ color: 0xd0defc, roughness: 0.6, side: THREE.DoubleSide }),
     )
     paper.position.y = -1.9
     const paper2 = paper.clone()
@@ -514,7 +612,7 @@ export class World {
       side: THREE.DoubleSide,
     })
     paper2.position.y = -1.95
-    const ribbonMat = new THREE.MeshStandardMaterial({ color: 0xe8508a, roughness: 0.5 })
+    const ribbonMat = new THREE.MeshStandardMaterial({ color: 0x1f43b8, roughness: 0.4 })
     const ribbon = new THREE.Mesh(new THREE.TorusGeometry(1.02, 0.08, 10, 40), ribbonMat)
     ribbon.rotation.x = Math.PI / 2
     ribbon.position.y = -1.35
@@ -591,6 +689,25 @@ export class World {
       const frames = this.cards.filter((c) => c.visible).map((c) => c.children[0] as THREE.Mesh)
       const hit = this.raycaster.intersectObjects(frames, false)[0]
       if (hit) this.ev.onPhotoTap(hit.object.userData.index as number)
+    } else if (this.stage === 'garden') {
+      const heads = this.flowers.map((f) => f.userData.head)
+      const hit = this.raycaster.intersectObjects(heads, true)[0]
+      const target = this.flowers.find((f) => hit && f.userData.head === hit.object.parent)
+      if (target) {
+        this.burst.emit(hit.point, 36, SPARK_COLORS, 1.8)
+        const h = target.userData.head
+        gsap.fromTo(
+          h.scale,
+          { x: h.scale.x * 1.5, y: h.scale.y * 1.5, z: h.scale.z * 1.5 },
+          {
+            x: target.userData.size,
+            y: target.userData.size,
+            z: target.userData.size,
+            duration: 0.9,
+            ease: 'elastic.out(1,0.4)',
+          },
+        )
+      }
     } else if (this.stage === 'heart') {
       const hit = this.raycaster
         .intersectObject(this.heart, true)
@@ -635,7 +752,7 @@ export class World {
     pxUniform.value = (this.height * this.renderer.getPixelRatio()) / (2 * tanH)
     this.visW = 2 * 10 * tanH * this.camera.aspect
     const fit = Math.min(1, this.visW / 9.5)
-    this.garden.scale.setScalar(Math.max(fit, 0.45))
+    this.garden.scale.setScalar(Math.max(fit, 0.62))
     if (this.stage === 'intro' || this.stage === 'seed' || this.stage === 'garden') {
       this.wordGroup.scale.setScalar(Math.min(1.1, (this.visW * 0.9) / 6))
     }
@@ -836,7 +953,7 @@ export class World {
   /** Лёгкое «сердцебиение» и всплеск сердечек. */
   heartBurst() {
     const p = new THREE.Vector3(0, 0, 0.8)
-    this.burst.emit(p, 90, [0xff5d8f, 0xff8fb1, 0xffc2d4, 0xffd36b], 3)
+    this.burst.emit(p, 90, SPARK_COLORS, 3)
   }
 
   // ---------- кадр ----------
@@ -871,7 +988,7 @@ export class World {
       const s = this.firefliesSeed[i]
       f.pos[i * 3] += Math.sin(t * 0.3 + s) * 0.18 * dt
       f.pos[i * 3 + 1] += Math.cos(t * 0.4 + s * 1.7) * 0.16 * dt
-      f.alpha[i] = 0.45 + 0.5 * Math.sin(t * 1.5 + s)
+      f.alpha[i] = 0.3 + 0.3 * Math.sin(t * 1.5 + s)
     }
     f.flush(true, true)
 

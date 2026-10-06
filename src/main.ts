@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import photosManifest from './photos.json'
 import { content } from './content'
 import { icons } from './icons'
+import { art, defs } from './art'
 import { detectQuality, hasWebGL, isTooWeak } from './quality'
 import { showFallback } from './fallback'
 import { World, type Stage } from './world'
@@ -23,9 +24,10 @@ function syncMusicBtn() {
 }
 syncMusicBtn()
 
-$('loaderHeart').innerHTML = icons.heart
-$('envCard').innerHTML = icons.flower
-$('envSeal').innerHTML = icons.heart
+$('artDefs').innerHTML = defs
+document
+  .querySelectorAll<HTMLElement>('[data-art]')
+  .forEach((el) => (el.innerHTML = art[el.dataset.art!]()))
 $('secretIcon').innerHTML = icons.mail
 for (const id of ['prevBtn', 'viewerPrev']) $(id).innerHTML = icons.chevronL
 for (const id of ['nextArrow', 'viewerNext']) $(id).innerHTML = icons.chevronR
@@ -115,7 +117,7 @@ async function boot() {
     const DOE = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }
     DOE.requestPermission?.().catch(() => {})
     start.classList.add('opening')
-    await wait(1500)
+    await wait(1400)
     start.classList.add('leaving')
     hud.hidden = false
     go('seed')
