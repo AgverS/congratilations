@@ -14,6 +14,6 @@ if (people[id]) {
   document.title = 'Открытки'
   app.innerHTML = `<div class="home"><h1 class="big">Для <em>кого</em>?</h1>
     ${Object.values(people)
-      .map((p) => `<a href="/${p.id}">${p.word.toLowerCase()} →</a>`)
+      .map((p) => `<a href="/${p.id}">${p.word.toLowerCase()}</a>`)
       .join('')}</div>`
 }
