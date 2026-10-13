@@ -7,6 +7,7 @@ const app = document.getElementById('app')!
 if (people[id]) {
   const p = people[id]
   document.title = p.title
+  document.documentElement.classList.add(`t-${p.id}`)
   void import('./story').then((m) => m.mount(app, p))
 } else {
   // главная страница — только для автора: выбор открытки

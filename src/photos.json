@@ -2,45 +2,45 @@
   "babushka": [
     {
       "src": "/photos/babushka/01.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/babushka/02.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/babushka/03.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/babushka/04.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/babushka/05.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     }
   ],
   "mama": [
     {
       "src": "/photos/mama/01.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/mama/02.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/mama/03.webp",
-      "width": 960,
-      "height": 1280
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/mama/04.webp",
@@ -49,50 +49,50 @@
     },
     {
       "src": "/photos/mama/05.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/mama/06.webp",
-      "width": 1200,
-      "height": 1600
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/mama/07.webp",
-      "width": 737,
-      "height": 1600
+      "width": 506,
+      "height": 1100
     },
     {
       "src": "/photos/mama/08.webp",
-      "width": 737,
-      "height": 1600
+      "width": 506,
+      "height": 1100
     },
     {
       "src": "/photos/mama/09.webp",
-      "width": 1600,
-      "height": 1200
+      "width": 1100,
+      "height": 825
     }
   ],
   "tetya": [
     {
       "src": "/photos/tetya/01.webp",
-      "width": 960,
-      "height": 1280
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/tetya/02.webp",
-      "width": 1280,
-      "height": 960
+      "width": 1100,
+      "height": 825
     },
     {
       "src": "/photos/tetya/03.webp",
-      "width": 960,
-      "height": 1280
+      "width": 825,
+      "height": 1100
     },
     {
       "src": "/photos/tetya/04.webp",
-      "width": 1280,
-      "height": 960
+      "width": 1100,
+      "height": 825
     }
   ]
 }

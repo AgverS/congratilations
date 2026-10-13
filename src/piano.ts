@@ -51,6 +51,13 @@ export class Piano {
     ;[72, 76, 79, 84, 88].forEach((n, i) => this.note(n, t + i * 0.09, 0.5, 3))
   }
 
+  // одна нота — для лепестков ромашки
+  pluck(i: number) {
+    if (!this.ctx || !this.playing) return
+    const scale = [72, 76, 79, 81, 84, 88]
+    this.note(scale[i % scale.length], this.ctx.currentTime, 0.45, 2.6)
+  }
+
   private build() {
     const ctx = new AudioContext()
     const out = ctx.createGain()

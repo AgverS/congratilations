@@ -7,7 +7,7 @@ import sharp from 'sharp'
 // Оригиналы: photos/<babushka|mama|tetya>/*.jpg|heic|png. Результат: public/photos/<id>/NN.webp
 const SRC = 'photos'
 const OUT = 'public/photos'
-const MAX = 1600
+const MAX = 1100
 const MANIFEST = 'src/photos.json'
 
 const manifest: Record<string, { src: string; width: number; height: number }[]> = JSON.parse(
@@ -36,7 +36,7 @@ for (const id of ['babushka', 'mama', 'tetya']) {
     const info = await sharp(input)
       .rotate()
       .resize({ width: MAX, height: MAX, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: 82 })
+      .webp({ quality: 78 })
       .toFile(join(OUT, id, name))
     manifest[id].push({ src: `/photos/${id}/${name}`, width: info.width, height: info.height })
     console.log(`${id}: ${file} -> ${name} (${info.width}x${info.height})`)
