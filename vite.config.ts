@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // относительные пути — сборку можно выложить в любую папку/хостинг
-  base: './',
+  // пути от корня: открытки живут на /babushka, /mama, /tetya
+  base: '/',
   build: { chunkSizeWarningLimit: 900 },
 })

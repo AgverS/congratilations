@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/(babushka|mama|tetya)", "destination": "/index.html" }]
+}
